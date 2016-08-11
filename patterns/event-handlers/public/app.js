@@ -19770,10 +19770,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _enhanceComponent = require('./enhanceComponent.jsx');
-
-var _enhanceComponent2 = _interopRequireDefault(_enhanceComponent);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19782,99 +19778,43 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Content = function Content(props) {
-  return _react2.default.createElement(
-    'p',
-    null,
-    'I am ',
-    props.name
-  );
-};
-var EnhancedContent = (0, _enhanceComponent2.default)(Content);
+var Switcher = function (_React$Component) {
+  _inherits(Switcher, _React$Component);
 
-Content.propTypes = {
-  name: _react2.default.PropTypes.string
-};
+  function Switcher(props) {
+    _classCallCheck(this, Switcher);
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Switcher).call(this, props));
 
-  function App() {
-    _classCallCheck(this, App);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+    _this.state = { name: 'React in patterns' };
+    _this._buttonClick = _this._handleButtonClick.bind(_this);
+    return _this;
   }
 
-  _createClass(App, [{
+  _createClass(Switcher, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(EnhancedContent, { name: 'Content component' });
+      return _react2.default.createElement(
+        'button',
+        { onClick: this._buttonClick },
+        'click me'
+      );
+    }
+  }, {
+    key: '_handleButtonClick',
+    value: function _handleButtonClick() {
+      console.log('Button is clicked inside ' + this.state.name);
     }
   }]);
 
-  return App;
+  return Switcher;
 }(_react2.default.Component);
 
 ;
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
+_reactDom2.default.render(_react2.default.createElement(Switcher, null), document.querySelector('#container'));
 
-},{"./enhanceComponent.jsx":169,"react":167,"react-dom":2}],169:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var enhanceComponent = function enhanceComponent(Component) {
-  return function (_React$Component) {
-    _inherits(Enhance, _React$Component);
-
-    function Enhance() {
-      _classCallCheck(this, Enhance);
-
-      return _possibleConstructorReturn(this, Object.getPrototypeOf(Enhance).apply(this, arguments));
-    }
-
-    _createClass(Enhance, [{
-      key: 'render',
-      value: function render() {
-        return _react2.default.createElement(
-          'section',
-          null,
-          _react2.default.createElement(
-            'h1',
-            null,
-            'I\'m high-order component'
-          ),
-          _react2.default.createElement(Component, _extends({}, this.state, this.props))
-        );
-      }
-    }]);
-
-    return Enhance;
-  }(_react2.default.Component);
-};
-
-exports.default = enhanceComponent;
-
-},{"react":167}]},{},[168])
+},{"react":167,"react-dom":2}]},{},[168])
 
 
 //# sourceMappingURL=app.js.map

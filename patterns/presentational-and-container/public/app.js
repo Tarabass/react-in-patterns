@@ -19760,7 +19760,128 @@ module.exports = require('./lib/React');
 },{"./lib/React":28}],168:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+exports.default = Clock;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Clock(props) {
+  var _map = [props.hours, props.minutes, props.seconds].map(function (num) {
+    return num < 10 ? '0' + num : num;
+  });
+
+  var _map2 = _slicedToArray(_map, 3);
+
+  var hours = _map2[0];
+  var minutes = _map2[1];
+  var seconds = _map2[2];
+
+
+  return _react2.default.createElement(
+    'h1',
+    null,
+    hours,
+    ' : ',
+    minutes,
+    ' : ',
+    seconds
+  );
+};
+Clock.propTypes = {
+  hours: _react2.default.PropTypes.number.isRequired,
+  minutes: _react2.default.PropTypes.number.isRequired,
+  seconds: _react2.default.PropTypes.number.isRequired
+};
+
+},{"react":167}],169:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Clock = require('./Clock.jsx');
+
+var _Clock2 = _interopRequireDefault(_Clock);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ClockContainer = function (_React$Component) {
+  _inherits(ClockContainer, _React$Component);
+
+  function ClockContainer(props) {
+    _classCallCheck(this, ClockContainer);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ClockContainer).call(this, props));
+
+    _this.state = { time: props.time };
+    _this._update = _this._updateTime.bind(_this);
+    return _this;
+  }
+
+  _createClass(ClockContainer, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_Clock2.default, this._extract(this.state.time));
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._interval = setInterval(this._update, 1000);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(this._interval);
+    }
+  }, {
+    key: '_extract',
+    value: function _extract(time) {
+      return {
+        hours: time.getHours(),
+        minutes: time.getMinutes(),
+        seconds: time.getSeconds()
+      };
+    }
+  }, {
+    key: '_updateTime',
+    value: function _updateTime() {
+      this.setState({ time: new Date(this.state.time.getTime() + 1000) });
+    }
+  }]);
+
+  return ClockContainer;
+}(_react2.default.Component);
+
+exports.default = ClockContainer;
+;
+ClockContainer.propTypes = {
+  time: _react2.default.PropTypes.object.isRequired
+};
+
+},{"./Clock.jsx":168,"react":167}],170:[function(require,module,exports){
+'use strict';
 
 var _react = require('react');
 
@@ -19770,111 +19891,53 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _enhanceComponent = require('./enhanceComponent.jsx');
+var _index = require('./Clock/index.jsx');
 
-var _enhanceComponent2 = _interopRequireDefault(_enhanceComponent);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+_reactDom2.default.render(_react2.default.createElement(_index2.default, { time: new Date() }), document.querySelector('#container'));
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Content = function Content(props) {
-  return _react2.default.createElement(
-    'p',
-    null,
-    'I am ',
-    props.name
-  );
-};
-var EnhancedContent = (0, _enhanceComponent2.default)(Content);
-
-Content.propTypes = {
-  name: _react2.default.PropTypes.string
-};
-
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App() {
-    _classCallCheck(this, App);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+/*
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { time: this.props.time };
+    this._update = this._updateTime.bind(this);
   }
+  render() {
+    var time = this._formatTime(this.state.time);
 
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(EnhancedContent, { name: 'Content component' });
-    }
-  }]);
+    return (
+      <h1>{ time.hours } : { time.minutes } : { time.seconds }</h1>
+    );
+  }
+  componentDidMount() {
+    this._interval = setInterval(this._update, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this._interval);
+  }
+  _formatTime(time) {
+    var [ hours, minutes, seconds ] = [
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds()
+    ].map(num => num < 10 ? '0' + num : num);
 
-  return App;
-}(_react2.default.Component);
-
-;
-
-_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
-
-},{"./enhanceComponent.jsx":169,"react":167,"react-dom":2}],169:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var enhanceComponent = function enhanceComponent(Component) {
-  return function (_React$Component) {
-    _inherits(Enhance, _React$Component);
-
-    function Enhance() {
-      _classCallCheck(this, Enhance);
-
-      return _possibleConstructorReturn(this, Object.getPrototypeOf(Enhance).apply(this, arguments));
-    }
-
-    _createClass(Enhance, [{
-      key: 'render',
-      value: function render() {
-        return _react2.default.createElement(
-          'section',
-          null,
-          _react2.default.createElement(
-            'h1',
-            null,
-            'I\'m high-order component'
-          ),
-          _react2.default.createElement(Component, _extends({}, this.state, this.props))
-        );
-      }
-    }]);
-
-    return Enhance;
-  }(_react2.default.Component);
+    return { hours, minutes, seconds };
+  }
+  _updateTime() {
+    this.setState({ time: new Date(this.state.time.getTime() + 1000) });
+  }
 };
+Clock.propTypes = {
+  time: React.PropTypes.object.isRequired
+};
+*/
 
-exports.default = enhanceComponent;
-
-},{"react":167}]},{},[168])
+},{"./Clock/index.jsx":169,"react":167,"react-dom":2}]},{},[170])
 
 
 //# sourceMappingURL=app.js.map
